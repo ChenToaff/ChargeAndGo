@@ -1,0 +1,25 @@
+.stars {
+  position: relative;
+  display: inline-block;
+  font-size: 20px;
+  height: 20px;
+  line-height: 20px;
+}
+
+.stars:before {
+  content: "\2606\2606\2606\2606\2606";
+}
+
+.stars:after {
+  content: "\2605\2605\2605\2605\2605";
+  position: absolute;
+  left: 0;
+  overflow: hidden;
+  width: var(--w, 50%);
+  color: rgb(255, 200, 0);
+  z-index: -1;
+}
+
+.list-group-item {
+  background-color: transparent;
+}
