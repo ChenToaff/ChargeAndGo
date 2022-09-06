@@ -4,7 +4,7 @@ import MapView from "features/map";
 import TabView from "./tabView";
 import NavBar from "components/navBar";
 import axios from "axios";
-import cookie from "react-cookies";
+const config = require("config.json");
 
 export default function Home() {
   const [selectedStation, setSelectedStation] = useState(null);
@@ -12,11 +12,7 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:80/api/stations/all", {
-        headers: {
-          Authorization: cookie.load("token"),
-        },
-      })
+      .get(`${config.base_url}stations/all`, {})
       .then((res) => {
         setStations(res.data);
       })

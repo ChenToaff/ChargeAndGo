@@ -2,57 +2,34 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "assets/styles/login.css";
+const config = require("config.json");
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [userName, setUserName] = useState("");
-
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  async function signup(e) {
+  function signup(e) {
     e.preventDefault();
-    try {
-      const res = await axios.post(
-        "http://localhost:80/api/users/register-user",
-        {
-          email: email,
-          password: password,
-          phone: phone,
-          name: userName,
-        }
-      );
-      navigate("/home");
-    } catch (err) {
-      setError(true);
-    }
+    axios
+      .post(`${config.base_url}users/register-user`, {
+        email: email,
+        password: password,
+        phone: phone,
+        name: userName,
+      })
+      .then(() => navigate("/home"))
+      .catch(() => setError(true));
   }
 
-  function emailChange(e) {
-    setEmail(e.target.value);
-  }
-  function passwordChange(e) {
-    setPassword(e.target.value);
-  }
-  function phoneChange(e) {
-    setPhone(e.target.value);
-  }
-  function userNameChange(e) {
-    setUserName(e.target.value);
-  }
   return (
     <main className="form-signin">
       <form onSubmit={signup}>
         <a href="/home">
-          <img
-            className="mb-4"
-            src="home_logo.png"
-            alt=""
-            width="80%"
-            height="80%"
-          />
+          <img className="mb-4" src="home_logo.png" width="80%" height="80%" />
         </a>
 
         <h1 className="h3 mb-3 fw-normal">Please sign Up</h1>
@@ -60,9 +37,8 @@ export default function SignUp() {
         <div className="form-floating">
           <input
             className="form-control"
-            id="userName"
             placeholder="name@example.com"
-            onChange={userNameChange}
+            onChange={(e) => setUserName(e.target.value)}
             required
           />
           <label>Name</label>
@@ -71,9 +47,8 @@ export default function SignUp() {
           <input
             type="phone"
             className="form-control"
-            id="phone"
             placeholder="name@example.com"
-            onChange={phoneChange}
+            onChange={(e) => setPhone(e.target.value)}
             required
           />
           <label>Phone</label>
@@ -82,9 +57,8 @@ export default function SignUp() {
           <input
             type="email"
             className="form-control"
-            id="email"
             placeholder="name@example.com"
-            onChange={emailChange}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <label>Email address</label>
@@ -93,9 +67,8 @@ export default function SignUp() {
           <input
             type="password"
             className="form-control"
-            id="password"
             placeholder="Password"
-            onChange={passwordChange}
+            onChange={(e) => setPassword(e.target.value)}
             required
             // pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
           >

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import cookie from "react-cookies";
 
 export default function AddStation({ touchedMap }) {
   const [stationType, setStationType] = useState("A");
@@ -18,7 +17,7 @@ export default function AddStation({ touchedMap }) {
         },
         {
           headers: {
-            Authorization: cookie.load("token"),
+            Authorization: localStorage.getItem("token"),
           },
         }
       );

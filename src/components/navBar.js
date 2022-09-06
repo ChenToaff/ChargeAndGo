@@ -1,18 +1,14 @@
-import cookie from "react-cookies";
 import { useNavigate } from "react-router-dom";
-
 import inactiveIcon from "assets/images/notification_inactive.png";
 import activeIcon from "assets/images/notification_active.png";
 
 export default function NavBar() {
   const navigate = useNavigate();
-  const isAdmin = cookie.load("admin") === "true";
-  const notifications = cookie.load("notifications") === "true";
+  const isAdmin = localStorage.getItem("admin") === "true";
+  const notifications = localStorage.getItem("notifications") === "true";
 
   function logout() {
-    cookie.remove("token");
-    cookie.remove("admin");
-    cookie.remove("notifications");
+    localStorage.clear();
     navigate("/login");
   }
 
@@ -63,7 +59,7 @@ export default function NavBar() {
             style={{ height: "25px", width: "25px", cursor: "pointer" }}
             src={notifications ? activeIcon : inactiveIcon}
             onClick={() => {
-              cookie.remove("notifications");
+              localStorage.removeItem("notifications");
             }}
           />
         </a>
