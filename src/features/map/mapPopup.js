@@ -15,7 +15,11 @@ export default function MapPopup({ station }) {
   useEffect(() => {
     console.log(station.orders);
     axios
-      .get(`${config.base_url}orders/${station._id}`)
+      .get(`${config.base_url}orders/${station._id}`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
       .then((res) => {
         setError(false);
         setOrders(res.data.orders);

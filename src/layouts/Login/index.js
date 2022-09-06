@@ -15,15 +15,23 @@ export default function Login() {
   function login(e) {
     e.preventDefault();
     axios
-      .post(`${config.base_url}users/login`, {
-        email: email,
-        password: password,
-      })
+      .post(
+        `${config.base_url}users/login`,
+        {
+          email: email,
+          password: password,
+        },
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      )
       .then((res) => {
         console.log(res);
         const token = res.data.token;
         const role = res.data.role;
-        cookie.save("Authorization", token);
+        localStorage.setItem("token", token);
         localStorage.setItem("admin", role === "admin");
         // cookie.save("notifications", res.data.notifications.length > 0);
         localStorage.setItem("notifications", true);

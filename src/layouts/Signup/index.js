@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "assets/styles/login.css";
+import logo from "assets/images/home_logo.png";
 const config = require("config.json");
 
 export default function SignUp() {
@@ -15,12 +16,20 @@ export default function SignUp() {
   function signup(e) {
     e.preventDefault();
     axios
-      .post(`${config.base_url}users/register-user`, {
-        email: email,
-        password: password,
-        phone: phone,
-        name: userName,
-      })
+      .post(
+        `${config.base_url}users/register-user`,
+        {
+          email: email,
+          password: password,
+          phone: phone,
+          name: userName,
+        },
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      )
       .then(() => navigate("/home"))
       .catch(() => setError(true));
   }
@@ -29,7 +38,7 @@ export default function SignUp() {
     <main className="form-signin">
       <form onSubmit={signup}>
         <a href="/home">
-          <img className="mb-4" src="home_logo.png" width="80%" height="80%" />
+          <img className="mb-4" src={logo} width="80%" height="80%" />
         </a>
 
         <h1 className="h3 mb-3 fw-normal">Please sign Up</h1>

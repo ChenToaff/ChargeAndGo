@@ -13,7 +13,11 @@ export default function Profile() {
 
   useEffect(() => {
     axios
-      .get(`${config.base_url}stations/`)
+      .get(`${config.base_url}stations/`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
       .then((res) => setStations(res.data))
       .catch((err) => {
         // setError(true);

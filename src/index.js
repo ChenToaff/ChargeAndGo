@@ -1,13 +1,13 @@
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "layouts/Login";
-import Home from "layouts/Home";
-import Profile from "layouts/Profile";
-import { CheckAdmin, CheckLogin } from "components/protectedRoutes";
-import Admin from "layouts/Admin";
 import Notifications from "layouts/Notifications";
-import SignUp from "layouts/Signup";
 import SignUpAdmin from "layouts/SignupAdmin";
+import Profile from "layouts/Profile";
+import SignUp from "layouts/Signup";
+import Login from "layouts/Login";
+import Admin from "layouts/Admin";
+import Home from "layouts/Home";
+import { CheckAdmin, CheckLogin } from "components/protectedRoutes";
 
 export default function App() {
   return (

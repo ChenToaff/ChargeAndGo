@@ -12,7 +12,11 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get(`${config.base_url}stations/all`, {})
+      .get(`${config.base_url}stations/all`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
       .then((res) => {
         setStations(res.data);
       })
