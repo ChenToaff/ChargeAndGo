@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
+const config = require("config.json");
 
 export default function AddStation({ touchedMap }) {
   const [stationType, setStationType] = useState("A");
   const [address, setAddress] = useState("");
 
-  async function handleClick() {
-    try {
-      const res = await axios.post(
-        "http://localhost:80/api/stations/register-station",
+  function handleClick(e) {
+    e.preventDefault();
+    axios
+      .post(
+        `${config.base_url}stations/register-station`,
         {
           longitude: parseFloat(touchedMap.lng),
           latitude: parseFloat(touchedMap.lat),
@@ -20,17 +22,13 @@ export default function AddStation({ touchedMap }) {
             Authorization: localStorage.getItem("token"),
           },
         }
-      );
-    } catch (err) {
-      // setError(true);
-    }
+      )
+      .then(() => window.location.reload(false))
+      .catch(() => {
+        // setError(true);
+      });
   }
-  function addressChange(e) {
-    setAddress(e.target.value);
-  }
-  function stationTypeChange(e) {
-    setStationType(e.target.value);
-  }
+
   return (
     <form
       onSubmit={handleClick}
@@ -46,20 +44,18 @@ export default function AddStation({ touchedMap }) {
       <label>Enter Address:</label>
 
       <input
-        id="address"
         className="m-auto form-control"
         placeholder="Address"
-        onChange={addressChange}
+        onChange={(e) => setAddress(e.target.value)}
         required
       ></input>
       <label>Select Type:</label>
       <select
-        id="stationType"
         class="form-select"
         aria-label="Default select example"
-        onChange={stationTypeChange}
+        onChange={(e) => setStationType(e.target.value)}
       >
-        <option selected value="A">
+        <option selected value={stationType}>
           A
         </option>
         <option value="B">B</option>

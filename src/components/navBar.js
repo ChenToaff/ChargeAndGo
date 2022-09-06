@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import inactiveIcon from "assets/images/notification_inactive.png";
 import activeIcon from "assets/images/notification_active.png";
-
 export default function NavBar() {
   const navigate = useNavigate();
   const isAdmin = localStorage.getItem("admin") === "true";

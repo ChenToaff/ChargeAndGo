@@ -1,9 +1,8 @@
 import { Outlet, Navigate } from "react-router-dom";
 import Login from "layouts/Login";
-import cookie from "react-cookies";
 
 const validateToken = () => {
-  let token = cookie.load("token");
+  let token = localStorage.getItem("token");
   return token;
 };
 

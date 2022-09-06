@@ -2,25 +2,35 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "assets/styles/login.css";
+import logo from "assets/images/home_logo.png";
+
 const config = require("config.json");
 
 export default function SignUpAdmin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
-  const [userName, setUserName] = useState("");
+  const [name, setName] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   function signup(e) {
     e.preventDefault();
     axios
-      .post(`${config.base_url}users/register-admin`, {
-        email: email,
-        password: password,
-        phone: phone,
-        name: userName,
-      })
+      .post(
+        `${config.base_url}users/register-admin`,
+        {
+          email,
+          password,
+          phone,
+          name,
+        },
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      )
       .then(navigate("/home"))
       .catch((err) => setError(true));
   }
@@ -29,13 +39,7 @@ export default function SignUpAdmin() {
     <main className="form-signin">
       <form onSubmit={signup}>
         <a href="/home">
-          <img
-            className="mb-4"
-            src="home_logo.png"
-            alt=""
-            width="80%"
-            height="80%"
-          />
+          <img className="mb-4" src={logo} width="80%" height="80%" />
         </a>
 
         <h1 className="h3 mb-3 fw-normal">Please sign Up As Admin</h1>
@@ -44,7 +48,7 @@ export default function SignUpAdmin() {
           <input
             className="form-control"
             placeholder="name@example.com"
-            onChange={(e) => setUserName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
             required
           />
           <label>Name</label>

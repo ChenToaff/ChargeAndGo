@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import NavBar from "components/navBar";
 import "assets/styles/admin.css";
 import axios from "axios";
@@ -9,15 +9,23 @@ export default function Admin() {
 
   function Block_user() {
     axios
-      .put(`${config.base_url}users/block/` + email, null, {})
+      .put(`${config.base_url}users/block/` + email, null, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
       .then((res) => alert("successful = " + (res.data.success === true)))
-      .catch(alert("unexpected error"));
+      .catch(() => alert("unexpected error"));
 
     setEmail("");
   }
   function Delete_user() {
     axios
-      .delete(`${config.base_url}users/` + email, {})
+      .delete(`${config.base_url}users/` + email, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
       .then((res) => alert("successful = " + (res.data.success === true)))
       .catch(() => {
         alert("unexpected error");
@@ -26,7 +34,11 @@ export default function Admin() {
   }
   function Unblock_user() {
     axios
-      .put(`${config.base_url}users/unblock/` + email, null)
+      .put(`${config.base_url}users/unblock/` + email, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
       .then((res) => alert("successful = " + (res.data.success === true)))
       .catch(() => alert("unexpected error"));
     setEmail("");
