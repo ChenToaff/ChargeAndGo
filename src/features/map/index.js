@@ -48,7 +48,7 @@ const InnerMap = compose(
     >
       {stations.map((station) => (
         <Marker
-          key={station.STATION_ID}
+          key={station._id}
           position={{
             lat: station.latitude,
             lng: station.longitude,

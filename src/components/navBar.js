@@ -44,7 +44,7 @@ export default function NavBar() {
           <a className="nav-item nav-link" href="profile">
             Profile
           </a>
-          {isAdmin == true && (
+          {isAdmin === true && (
             <a className="nav-item nav-link" href="Admin">
               Admin
             </a>

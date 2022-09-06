@@ -45,10 +45,10 @@ export default function Admin() {
   }
 
   return (
-    <div class="container-fluid p-0" style={{ overflowX: "hidden" }}>
+    <div className="container-fluid p-0" style={{ overflowX: "hidden" }}>
       <NavBar />
       <div className="row">
-        <main class="col-12">
+        <main className="col-12">
           <div style={{ marginTop: "100px" }}>
             <h1>Welcome dear admin!</h1>
           </div>

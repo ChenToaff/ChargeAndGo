@@ -26,7 +26,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div class="container-fluid p-0 " style={{ overflowX: "hidden" }}>
+    <div className="container-fluid p-0 " style={{ overflowX: "hidden" }}>
       <NavBar />
       <div className="row flex-grow-1" style={{ height: "93%" }}>
         <div className="col-sm-12 col-md-3 p-0 h-100">

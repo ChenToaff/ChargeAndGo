@@ -25,7 +25,7 @@ export default function Profile() {
   }, []);
 
   return (
-    <div class="container-fluid p-0" style={{ overflowX: "hidden" }}>
+    <div className="container-fluid p-0" style={{ overflowX: "hidden" }}>
       <NavBar />
       <div className="row">
         <Sidebar
@@ -47,7 +47,7 @@ export default function Profile() {
             },
           ]}
         />
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
           {selectedItem && selectedItem.id === 1 ? (
             <EditProfile></EditProfile>
           ) : (
