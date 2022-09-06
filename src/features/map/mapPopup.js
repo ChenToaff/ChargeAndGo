@@ -64,11 +64,12 @@ export default function MapPopup({ station }) {
         height: "500px",
         overflow: "initial",
         marginTop: "10px",
+        textAlign: "center",
       }}
     >
       <h2>{station.address}</h2>
       <div
-        class="stars"
+        className="stars"
         style={{ "--w": `${(station.rating / 5) * 100}%` }}
       ></div>
       <h6 style={{ textAlign: "left" }}>
@@ -88,7 +89,7 @@ export default function MapPopup({ station }) {
       </div>
       <label>current orders:</label>
       <div style={{ height: "200px", overflowY: "scroll" }}>
-        <table class="table">
+        <table className="table">
           <thead>
             <tr>
               <th scope="col">#</th>

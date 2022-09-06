@@ -51,7 +51,7 @@ export default function AddStation({ touchedMap }) {
       ></input>
       <label>Select Type:</label>
       <select
-        class="form-select"
+        className="form-select"
         aria-label="Default select example"
         onChange={(e) => setStationType(e.target.value)}
       >

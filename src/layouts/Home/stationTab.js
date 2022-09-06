@@ -17,16 +17,16 @@ export default function StationTab({
     <a
       href="#"
       onClick={tabClicked}
-      class={
+      className={
         "list-group-item list-group-item-action py-3 lh-tight p-4 " +
         (selectedStation && selectedStation._id === station._id ? "active" : "")
       }
       aria-current="true"
     >
-      <div class="d-flex w-100  justify-content-between">
-        <strong class="mb-1">{station.address}</strong>
+      <div className="d-flex w-100  justify-content-between">
+        <strong className="mb-1">{station.address}</strong>
         <div
-          class="stars"
+          className="stars"
           style={{ "--w": `${(station.rating / 5) * 100}%`, marginLeft: "0" }}
         ></div>
       </div>
