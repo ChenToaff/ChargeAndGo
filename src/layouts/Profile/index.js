@@ -4,24 +4,17 @@ import MapView from "features/map";
 import NavBar from "components/navBar";
 import Sidebar from "components/sidebar";
 import axios from "axios";
-import cookie from "react-cookies";
+const config = require("config.json");
 
 export default function Profile() {
   const [selectedStation, setSelectedStation] = useState(null);
-  const [selectedItem, setSelectedItem] = useState(undefined);
+  const [selectedItem, setSelectedItem] = useState({ id: 2 });
   const [stations, setStations] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:80/api/stations/", {
-        headers: {
-          Authorization: cookie.load("token"),
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        setStations(res.data);
-      })
+      .get(`${config.base_url}stations/`)
+      .then((res) => setStations(res.data))
       .catch((err) => {
         // setError(true);
       });
@@ -51,7 +44,7 @@ export default function Profile() {
           ]}
         />
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-          {selectedItem && selectedItem.id ? (
+          {selectedItem && selectedItem.id === 1 ? (
             <EditProfile></EditProfile>
           ) : (
             <div style={{ width: "80vw", height: "90vh", margin: "auto" }}>

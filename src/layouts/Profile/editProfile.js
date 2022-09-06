@@ -1,7 +1,6 @@
 export default function EditProfile() {
   function onSubmit(e) {
     e.preventDefault();
-    e.submit();
   }
 
   return (
@@ -17,10 +16,8 @@ export default function EditProfile() {
                     Name
                   </label>
                   <input
-                    name="name"
                     type="text"
                     class="form-control"
-                    id="firstName"
                     placeholder="Your Name Here"
                     required
                   />
@@ -34,10 +31,8 @@ export default function EditProfile() {
                     Email
                   </label>
                   <input
-                    name="email"
                     type="email"
                     class="form-control"
-                    id="email"
                     placeholder="you@example.com"
                   />
                   <div class="invalid-feedback">
@@ -50,9 +45,7 @@ export default function EditProfile() {
                     Phone
                   </label>
                   <input
-                    nume="phone"
                     class="form-control"
-                    id="phone"
                     placeholder="050-1234567"
                     required
                   />
@@ -63,13 +56,7 @@ export default function EditProfile() {
                   <label for="password" class="form-label">
                     Password
                   </label>
-                  <input
-                    type="password"
-                    nume="password"
-                    class="form-control"
-                    id="password"
-                    required
-                  />
+                  <input type="password" class="form-control" required />
                   <div class="invalid-feedback">
                     Please enter your password.
                   </div>

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import cookie from "react-cookies";
+import axios from "axios";
 import "assets/styles/login.css";
 import logo from "assets/images/home_logo.png";
+const config = require("config.json");
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -11,33 +12,26 @@ export default function Login() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  async function login(e) {
+  function login(e) {
     e.preventDefault();
-    try {
-      const res = await axios.post("http://localhost:80/api/users/login", {
+    axios
+      .post(`${config.base_url}users/login`, {
         email: email,
         password: password,
-      });
-      console.log(res);
-      const token = res.data.token;
-      const role = res.data.role;
-      cookie.save("token", token);
-      cookie.save("admin", role === "admin");
-      // cookie.save("notifications", res.data.notifications.length > 0);
-      cookie.save("notifications", true);
-      navigate("/home");
-    } catch (err) {
-      setError(true);
-    }
+      })
+      .then((res) => {
+        console.log(res);
+        const token = res.data.token;
+        const role = res.data.role;
+        cookie.save("Authorization", token);
+        localStorage.setItem("admin", role === "admin");
+        // cookie.save("notifications", res.data.notifications.length > 0);
+        localStorage.setItem("notifications", true);
+        navigate("/home");
+      })
+      .catch(() => setError(true));
   }
 
-  function emailChange(e) {
-    setEmail(e.target.value);
-  }
-
-  function passwordChange(e) {
-    setPassword(e.target.value);
-  }
   return (
     <main className="form-signin">
       <form onSubmit={login}>
@@ -48,9 +42,8 @@ export default function Login() {
           <input
             // type="email"
             className="form-control"
-            id="email"
             placeholder="name@example.com"
-            onChange={emailChange}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <label>Email address</label>
@@ -59,9 +52,8 @@ export default function Login() {
           <input
             type="password"
             className="form-control"
-            id="password"
             placeholder="Password"
-            onChange={passwordChange}
+            onChange={(e) => setPassword(e.target.value)}
             required
             title=" merki"
             // pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"

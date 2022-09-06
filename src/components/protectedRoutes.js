@@ -8,7 +8,7 @@ const validateToken = () => {
 };
 
 const checkAdmin = () => {
-  let isAdmin = cookie.load("admin") === "true";
+  let isAdmin = localStorage.getItem("admin") === "true";
   return isAdmin;
 };
 

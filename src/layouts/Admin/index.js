@@ -1,70 +1,37 @@
 import React, { useState, useRef } from "react";
 import NavBar from "components/navBar";
 import "assets/styles/admin.css";
-import cookie from "react-cookies";
 import axios from "axios";
+const config = require("config.json");
 
 export default function Admin() {
   const [email, setEmail] = useState("");
-  const emailRef = useRef(null);
 
-  async function Block_user() {
-    try {
-      console.log(cookie.load("token"));
-      const res = await axios.put(
-        "http://localhost:80/api/users/block/" + email,
-        null,
-        {
-          headers: {
-            Authorization: cookie.load("token"),
-          },
-        }
-      );
-      console.log(res.data.success);
-      alert("successful = " + (res.data.success === true));
-    } catch (err) {
-      alert("unexpected error");
-    }
-    emailRef.current.value = "";
+  function Block_user() {
+    axios
+      .put(`${config.base_url}users/block/` + email, null, {})
+      .then((res) => alert("successful = " + (res.data.success === true)))
+      .catch(alert("unexpected error"));
+
+    setEmail("");
   }
-  async function Delete_user() {
-    try {
-      console.log(cookie.load("token"));
-      const res = await axios.delete("http://localhost:80/api/users/" + email, {
-        headers: {
-          Authorization: cookie.load("token"),
-        },
+  function Delete_user() {
+    axios
+      .delete(`${config.base_url}users/` + email, {})
+      .then((res) => alert("successful = " + (res.data.success === true)))
+      .catch(() => {
+        alert("unexpected error");
       });
-      console.log(res.data.success);
-      alert("successful = " + (res.data.success === true));
-    } catch (err) {
-      alert("unexpected error");
-    }
-    emailRef.current.value = "";
+    setEmail("");
   }
-  async function Unblock_user() {
-    try {
-      console.log(cookie.load("token"));
-      const res = await axios.put(
-        "http://localhost:80/api/users/unblock/" + email,
-        null,
-        {
-          headers: {
-            Authorization: cookie.load("token"),
-          },
-        }
-      );
-      console.log(res.data.success);
-      alert("successful = " + (res.data.success === true));
-    } catch (err) {
-      alert("unexpected error");
-    }
-    emailRef.current.value = "";
+  function Unblock_user() {
+    axios
+      .put(`${config.base_url}users/unblock/` + email, null)
+      .then((res) => alert("successful = " + (res.data.success === true)))
+      .catch(() => alert("unexpected error"));
+    setEmail("");
   }
 
-  function emailChange(e) {
-    setEmail(e.target.value);
-  }
   return (
     <div class="container-fluid p-0" style={{ overflowX: "hidden" }}>
       <NavBar />
@@ -81,10 +48,9 @@ export default function Admin() {
                   <input
                     type="email"
                     className="form-control"
-                    id="email"
+                    value={email}
                     placeholder="name@example.com"
-                    onChange={emailChange}
-                    ref={emailRef}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                   <label>Email address</label>

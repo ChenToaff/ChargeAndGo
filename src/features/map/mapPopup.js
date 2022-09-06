@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import cookie from "react-cookies";
 import "assets/styles/stars.css";
+const config = require("config.json");
 
 export default function MapPopup({ station }) {
   const [orders, setOrders] = useState([]);
@@ -12,72 +12,44 @@ export default function MapPopup({ station }) {
   const [error, setError] = useState(null);
   const [errorText, setErrorText] = useState("Order failed!");
 
-  useEffect(async () => {
+  useEffect(() => {
     console.log(station.orders);
-    try {
-      const res = await axios.get(
-        "http://localhost:80/api/orders/" + station._id,
-        {
-          headers: {
-            Authorization: cookie.load("token"),
-          },
-        }
-      );
-      setError(false);
-      setOrders(res.data.orders);
-    } catch (err) {
-      setErrorText("Order failed!");
-      setError(true);
-    }
+    axios
+      .get(`${config.base_url}orders/${station._id}`)
+      .then((res) => {
+        setError(false);
+        setOrders(res.data.orders);
+      })
+      .catch(() => {
+        setErrorText("Order failed!");
+        setError(true);
+      });
   }, [station, orders.length]);
-  useEffect(async () => {}, [error, errorText]);
 
-  async function bookStation() {
+  function bookStation() {
     if (!startDate || !startTime || !endDate || !endTime) {
       setErrorText("Missing Fields!");
       setError(true);
       return;
     }
-    try {
-      const res = await axios.post(
-        "http://localhost:80/api/orders/station/" + station._id,
-        {
-          startTime: `${startDate} ${startTime}`,
-          endTime: `${endDate} ${endTime}`,
-        },
-        {
-          headers: {
-            Authorization: cookie.load("token"),
+    axios
+      .post(`${config.base_url}orders/station/${station._id}`, {
+        startTime: `${startDate} ${startTime}`,
+        endTime: `${endDate} ${endTime}`,
+      })
+      .then(
+        setOrders([
+          ...orders,
+          {
+            startTime: `${startDate} ${startTime}`,
+            endTime: `${endDate} ${endTime}`,
           },
-        }
-      );
-      if (!res.data.success) {
-        throw new Error();
-      }
-      setOrders([
-        ...orders,
-        {
-          startTime: `${startDate} ${startTime}`,
-          endTime: `${endDate} ${endTime}`,
-        },
-      ]);
-    } catch (err) {
-      setErrorText("Order failed!");
-
-      setError(true);
-    }
-  }
-  function startTimeChange(e) {
-    SetstartTime(e.target.value);
-  }
-  function startDateChange(e) {
-    SetstartDate(e.target.value);
-  }
-  function endTimeChange(e) {
-    SetEndTime(e.target.value);
-  }
-  function endDateChange(e) {
-    SetEndDate(e.target.value);
+        ])
+      )
+      .catch(() => {
+        setErrorText("Order failed!");
+        setError(true);
+      });
   }
 
   return (
@@ -102,13 +74,13 @@ export default function MapPopup({ station }) {
 
       <label>select start date: </label>
       <div inline="true">
-        <input type="time" onChange={startTimeChange} />{" "}
-        <input type="date" onChange={startDateChange} />
+        <input type="time" onChange={(e) => SetstartTime(e.target.value)} />{" "}
+        <input type="date" onChange={(e) => SetstartDate(e.target.value)} />
       </div>
       <label>select end date: </label>
       <div inline="true">
-        <input type="time" onChange={endTimeChange} />{" "}
-        <input type="date" onChange={endDateChange} />
+        <input type="time" onChange={(e) => SetEndTime(e.target.value)} />{" "}
+        <input type="date" onChange={(e) => SetEndDate(e.target.value)} />
       </div>
       <label>current orders:</label>
       <div style={{ height: "200px", overflowY: "scroll" }}>
