@@ -47,7 +47,7 @@ export default function Admin() {
   return (
     <div className="container-fluid p-0" style={{ overflowX: "hidden" }}>
       <NavBar />
-      <div className="row">
+      <div className="row text-center">
         <main className="col-12">
           <div style={{ marginTop: "100px" }}>
             <h1>Welcome dear admin!</h1>

@@ -13,7 +13,6 @@ export default function MapPopup({ station }) {
   const [errorText, setErrorText] = useState("Order failed!");
 
   useEffect(() => {
-    console.log(station.orders);
     axios
       .get(`${config.base_url}orders/${station._id}`, {
         headers: {
@@ -99,7 +98,7 @@ export default function MapPopup({ station }) {
           </thead>
           <tbody>
             {orders.map((order, index) => (
-              <tr>
+              <tr key={order._id}>
                 <th scope="row">{index}</th>
                 <td>{`${new Date(
                   order.startTime
