@@ -1,4 +1,5 @@
 import "assets/styles/stars.css";
+import logo from "assets/images/charging_tab.jpg";
 
 export default function StationTab({
   station,
@@ -24,6 +25,7 @@ export default function StationTab({
       aria-current="true"
     >
       <div className="d-flex w-100  justify-content-between">
+        <img src={logo} style={{ width: "50px", height: "50px" }}></img>
         <strong className="mb-1">{station.address}</strong>
         <div
           className="stars"

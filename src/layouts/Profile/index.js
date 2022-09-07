@@ -8,7 +8,7 @@ const config = require("config.json");
 
 export default function Profile() {
   const [selectedStation, setSelectedStation] = useState(null);
-  const [selectedItem, setSelectedItem] = useState({ id: 2 });
+  const [selectedItem, setSelectedItem] = useState({ id: 1 });
   const [stations, setStations] = useState([]);
 
   useEffect(() => {
@@ -33,14 +33,14 @@ export default function Profile() {
           items={[
             {
               id: 1,
-              label: "edit profile",
+              label: "my stations",
               handleClick: function () {
                 setSelectedItem(this);
               },
             },
             {
               id: 2,
-              label: "my stations",
+              label: "edit profile",
               handleClick: function () {
                 setSelectedItem(this);
               },
@@ -48,7 +48,7 @@ export default function Profile() {
           ]}
         />
         <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-          {selectedItem && selectedItem.id === 1 ? (
+          {selectedItem && selectedItem.id === 2 ? (
             <EditProfile></EditProfile>
           ) : (
             <div style={{ width: "80vw", height: "90vh", margin: "auto" }}>

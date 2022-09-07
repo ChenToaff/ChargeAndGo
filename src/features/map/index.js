@@ -6,7 +6,7 @@ import {
   Marker,
   InfoWindow,
 } from "react-google-maps";
-import lightning from "assets/images/lightning.svg";
+import lightning from "assets/images/charging_map.png";
 import { compose, withProps } from "recompose";
 import AddStation from "./addStation";
 import MapPopup from "./mapPopup";
@@ -63,7 +63,7 @@ const InnerMap = compose(
         />
       ))}
 
-      {selectedStation && !touchedMap && (
+      {selectedStation && (
         <InfoWindow
           onCloseClick={() => {
             setSelectedStation(null);
